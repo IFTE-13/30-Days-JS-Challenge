@@ -1,4 +1,5 @@
-# 🚀 30 Days JavaScript Challenge
+# 30 Days JavaScript Challenge
+
 ![Progress](https://img.shields.io/badge/Progress-1%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![CSS](https://img.shields.io/badge/CSS3-blue)
@@ -22,15 +23,14 @@
 
 ## Projects List
 
-| Day | Project Name | API | Code |
-|-----|-------------|--------|------|
-| 1   | Weather App | ✅ OpenWeatherMap | [View Code](./weather-app) |
-
+| Day | Project Name    | API            | Code                       |
+|----|-------------|--------------|-------------------------|
+| 1  | Weather App | ✅ OpenWeatherMap | [View Code](./weather-app) |
+| 2  | TODO App | ❌ | [View Code](./todo-app) |
 
 > [!NOTE]
 > Consistency beats intensity.
 > This challenge is about showing up every day and improving step by step.
-
 > [!IMPORTANT]
 > This is a personal challenge, but suggestions and feedback are always welcome!
 
