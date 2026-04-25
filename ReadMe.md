@@ -1,8 +1,8 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-1%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-3%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
-![CSS](https://img.shields.io/badge/CSS3-blue)
+![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
 ![API](https://img.shields.io/badge/API-lightgrey)
 
@@ -17,7 +17,7 @@
 ## Tech Stack
 
 - HTML5  
-- CSS3  
+- Tailwind CSS  
 - JavaScript (ES6+)  
 - APIs (for selected projects)
 
@@ -27,10 +27,12 @@
 |----|-------------|--------------|-------------------------|
 | 1  | Weather App | ✅ OpenWeatherMap | [View Code](./weather-app) |
 | 2  | TODO App | ❌ | [View Code](./todo-app) |
+| 2  | Quiz App | ❌ | [View Code](./quiz-app) |
 
 > [!NOTE]
 > Consistency beats intensity.
 > This challenge is about showing up every day and improving step by step.
+
 > [!IMPORTANT]
 > This is a personal challenge, but suggestions and feedback are always welcome!
 
