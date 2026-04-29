@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 w-full max-w-md shadow-2xl border border-white/20">
+        <div class="calculator">
+            <h1 class="text-3xl font-bold text-white mb-6 flex items-center gap-2">
+                <span class="material-icons text-4xl text-emerald-400">cake</span>
+                Age Calculator
+            </h1>
+            <div class="input-box space-y-4">
+                <div>
+                    <label class="text-gray-200 text-sm mb-2 block">Select your birth date</label>
+                    <input type="date" id="date" class="w-full bg-gray-800/80 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                </div>
+                <button onclick="calculateAge()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg flex items-center justify-center gap-2 transition-all font-semibold shadow-lg">
+                    <span class="material-icons">calculate</span>
+                    Calculate Age
+                </button>
+            </div>
+        </div>
+        
+        <div id="result" class="mt-6 hidden">
+            <div class="bg-gray-800/60 backdrop-blur-sm rounded-xl p-5 border border-emerald-500/30">
+                <h3 class="text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+                    <span class="material-icons text-[20px]">fact_check</span>
+                    Your Exact Age
+                </h3>
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="bg-gray-900/50 rounded-lg p-3">
+                        <div class="text-3xl font-bold text-white" id="years">0</div>
+                        <div class="text-xs text-gray-400 mt-1">Years</div>
+                    </div>
+                    <div class="bg-gray-900/50 rounded-lg p-3">
+                        <div class="text-3xl font-bold text-white" id="months">0</div>
+                        <div class="text-xs text-gray-400 mt-1">Months</div>
+                    </div>
+                    <div class="bg-gray-900/50 rounded-lg p-3">
+                        <div class="text-3xl font-bold text-white" id="days">0</div>
+                        <div class="text-xs text-gray-400 mt-1">Days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userInput = document.getElementById("date");
+        userInput.max = new Date().toISOString().split("T")[0];
+
+        function calculateAge() {
+            if (!userInput.value) {
+                alert("Please select your birth date first!");
+                return;
+            }
+            
+            let birthDate = new Date(userInput.value);
+            let today = new Date();
+            
+            if (birthDate > today) {
+                alert("Birth date cannot be in the future!");
+                return;
+            }
+            
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+            
+            if (days < 0) {
+                months--;
+                let lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            document.getElementById('result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

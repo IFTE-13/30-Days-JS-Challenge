@@ -30,6 +30,7 @@
 | 3  | Quiz App | ❌ | [View Code](./quiz-app) |
 | 4  | Random Password Generator | ❌ | [View Code](./random-password-generator) |
 | 5  | Notes Application | ❌ | [View Code](./note-app) |
+| 6  | Age Calculator | ❌ | [View Code](./age-calculator) |
 
 > [!NOTE]
 > Consistency beats intensity.
