@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>SecurePass — Password Generator</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#0a0a0c] to-[#121218] flex items-center justify-center min-h-screen p-4 font-sans">
+
+  <div class="bg-[#1c1c1e] border border-gray-700/60 rounded-2xl p-6 w-full max-w-md shadow-2xl backdrop-blur-sm transition-all duration-200">
+
+    <h1 class="text-xl font-semibold tracking-tight text-white">Password generator</h1>
+
+    <div class="flex items-center bg-[#111113] border border-gray-700 rounded-xl px-3 py-2.5 mb-6 focus-within:ring-1 focus-within:ring-emerald-500/50 transition-all">
+      <input id="password" type="text" readonly
+        class="bg-transparent flex-1 outline-none text-gray-200 text-sm md:text-base font-mono tracking-wide">
+      
+      <button onclick="copyPassword()" class="p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-800/70 transition-all" title="Copy password">
+        <span class="material-icons text-[20px]">content_copy</span>
+      </button>
+
+      <button onclick="generatePassword()" class="p-1.5 rounded-md text-gray-400 hover:text-white hover:bg-gray-800/70 transition-all ml-1" title="Generate new password">
+        <span class="material-icons text-[20px]">autorenew</span>
+      </button>
+    </div>
+
+    <div class="mb-6">
+      <div class="flex justify-between text-sm text-gray-300 mb-1.5">
+        <span class="flex items-center gap-1"><span class="material-icons text-[18px]">format_size</span> Length</span>
+        <span id="lengthValue" class="font-mono bg-gray-800/60 px-2 py-0.5 rounded-md text-emerald-300">12</span>
+      </div>
+      <input id="lengthSlider" type="range" min="6" max="32" value="12"
+        class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <div class="flex justify-between items-center">
+        <span class="text-gray-200 text-sm flex items-center gap-1.5"><span class="material-icons text-[18px] text-emerald-400">arrow_upward</span> Uppercase (A-Z)</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="upper" checked class="peer sr-only">
+          <div class="w-9 h-5 bg-gray-600 rounded-full peer-checked:bg-emerald-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all after:duration-200 relative"></div>
+        </label>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span class="text-gray-200 text-sm flex items-center gap-1.5"><span class="material-icons text-[18px] text-emerald-400">arrow_downward</span> Lowercase (a-z)</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="lower" checked class="peer sr-only">
+          <div class="w-9 h-5 bg-gray-600 rounded-full peer-checked:bg-emerald-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all after:duration-200 relative"></div>
+        </label>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span class="text-gray-200 text-sm flex items-center gap-1.5"><span class="material-icons text-[18px] text-emerald-400">looks_one</span> Numbers (0-9)</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="number" checked class="peer sr-only">
+          <div class="w-9 h-5 bg-gray-600 rounded-full peer-checked:bg-emerald-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all after:duration-200 relative"></div>
+        </label>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span class="text-gray-200 text-sm flex items-center gap-1.5"><span class="material-icons text-[18px] text-emerald-400">pest_control</span> Symbols (!@#...)</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="symbol" checked class="peer sr-only">
+          <div class="w-9 h-5 bg-gray-600 rounded-full peer-checked:bg-emerald-500 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all after:duration-200 relative"></div>
+        </label>
+      </div>
+    </div>
+
+    <button onclick="generatePassword()"
+      class="w-full flex items-center justify-center gap-2 bg-emerald-600/20 border border-emerald-500/50 py-2.5 rounded-xl hover:bg-emerald-600/40 transition-all duration-200 text-gray-100 font-medium shadow-md hover:shadow-emerald-900/20">
+      <span class="material-icons text-emerald-300 text-xl">auto_awesome</span>
+      <span>Generate password</span>
+    </button>
+  </div>
+
+  <script>
+    const passwordBox = document.getElementById('password');
+    const lengthSlider = document.getElementById('lengthSlider');
+    const lengthValue = document.getElementById('lengthValue');
+
+    const upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lowerChars = "abcdefghijklmnopqrstuvwxyz";
+    const numberChars = "0123456789";
+    const symbolChars = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+    lengthSlider.oninput = () => {
+      lengthValue.innerText = lengthSlider.value;
+      generatePassword();
+    };
+    
+    const upperCheck = document.getElementById('upper');
+    const lowerCheck = document.getElementById('lower');
+    const numberCheck = document.getElementById('number');
+    const symbolCheck = document.getElementById('symbol');
+    
+    const optionCheckboxes = [upperCheck, lowerCheck, numberCheck, symbolCheck];
+    optionCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => generatePassword());
+    });
+    
+    function generatePassword() {
+      let chars = "";
+      if (upperCheck.checked) chars += upperChars;
+      if (lowerCheck.checked) chars += lowerChars;
+      if (numberCheck.checked) chars += numberChars;
+      if (symbolCheck.checked) chars += symbolChars;
+
+      if (!chars) {
+        passwordBox.value = "⚠️ Select at least one option";
+        return;
+      }
+
+      const length = parseInt(lengthSlider.value, 10);
+      let password = "";
+      
+      let selectedCategories = [];
+      if (upperCheck.checked) selectedCategories.push(upperChars);
+      if (lowerCheck.checked) selectedCategories.push(lowerChars);
+      if (numberCheck.checked) selectedCategories.push(numberChars);
+      if (symbolCheck.checked) selectedCategories.push(symbolChars);
+
+      let passwordArray = [];
+      
+      for (let i = 0; i < selectedCategories.length; i++) {
+        const category = selectedCategories[i];
+        const randomChar = category[Math.floor(Math.random() * category.length)];
+        passwordArray.push(randomChar);
+      }
+      
+      const remainingLength = length - selectedCategories.length;
+      for (let i = 0; i < remainingLength; i++) {
+        const randomChar = chars[Math.floor(Math.random() * chars.length)];
+        passwordArray.push(randomChar);
+      }
+      
+      for (let i = passwordArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [passwordArray[i], passwordArray[j]] = [passwordArray[j], passwordArray[i]];
+      }
+      
+      password = passwordArray.join('');
+      
+      if (password.length > length) {
+        password = password.slice(0, length);
+      }
+      
+      passwordBox.value = password;
+    }
+    
+    function copyPassword() {
+      const password = passwordBox.value;
+      if (!password || password.includes("Select") || password.includes("⚠️")) {
+        const copyBtn = event.currentTarget;
+        const originalIcon = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="material-icons text-[20px]">error_outline</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = originalIcon;
+        }, 800);
+        return;
+      }
+      
+      navigator.clipboard.writeText(password).then(() => {
+        const copyBtn = event.currentTarget;
+        const originalIcon = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="material-icons text-[20px] text-emerald-400">check</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = originalIcon;
+        }, 800);
+      }).catch(() => {
+        passwordBox.select();
+        document.execCommand("copy");
+        const copyBtn = event.currentTarget;
+        const originalIcon = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="material-icons text-[20px] text-emerald-400">check</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = originalIcon;
+        }, 800);
+      });
+    }
+    
+    generatePassword();
+  </script>
+</body>
+</html>

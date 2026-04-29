@@ -27,7 +27,8 @@
 |----|-------------|--------------|-------------------------|
 | 1  | Weather App | ✅ OpenWeatherMap | [View Code](./weather-app) |
 | 2  | TODO App | ❌ | [View Code](./todo-app) |
-| 2  | Quiz App | ❌ | [View Code](./quiz-app) |
+| 3  | Quiz App | ❌ | [View Code](./quiz-app) |
+| 4  | Random Password Generator | ❌ | [View Code](./random-password-generator) |
 
 > [!NOTE]
 > Consistency beats intensity.
