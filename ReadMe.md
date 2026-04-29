@@ -29,6 +29,7 @@
 | 2  | TODO App | ❌ | [View Code](./todo-app) |
 | 3  | Quiz App | ❌ | [View Code](./quiz-app) |
 | 4  | Random Password Generator | ❌ | [View Code](./random-password-generator) |
+| 5  | Notes Application | ❌ | [View Code](./note-app) |
 
 > [!NOTE]
 > Consistency beats intensity.
