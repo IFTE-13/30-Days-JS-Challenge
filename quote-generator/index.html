@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-gray-800 rounded-xl p-8 w-full max-w-2xl shadow-2xl border border-gray-700">
+        <div class="text-center mb-6">
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <span class="material-icons text-3xl text-gray-400">format_quote</span>
+                <h1 class="text-2xl font-semibold text-gray-100">Quote of the Day</h1>
+                <span class="material-icons text-3xl text-gray-400 rotate-180">format_quote</span>
+            </div>
+            <div class="w-16 h-0.5 bg-gray-600 mx-auto"></div>
+        </div>
+        
+        <div class="bg-gray-900 rounded-lg p-6 mb-6 min-h-[200px] flex flex-col justify-center border border-gray-700">
+            <blockquote class="text-gray-200 text-lg leading-relaxed text-center" id="quoteText">Loading...</blockquote>
+            <div class="mt-4 text-center">
+                <span class="text-gray-400 font-medium" id="quoteAuthor">- Loading</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-center gap-3">
+            <button onclick="fetchNewQuote()" class="bg-gray-700 hover:bg-gray-600 text-gray-100 px-6 py-2 rounded-lg flex items-center gap-2 transition-all font-medium shadow-md border border-gray-600">
+                <span class="material-icons text-[18px]">refresh</span>
+                New Quote
+            </button>
+            <button onclick="copyQuote()" class="bg-gray-700 hover:bg-gray-600 text-gray-100 px-6 py-2 rounded-lg flex items-center gap-2 transition-all font-medium shadow-md border border-gray-600">
+                <span class="material-icons text-[18px]">content_copy</span>
+                Copy
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

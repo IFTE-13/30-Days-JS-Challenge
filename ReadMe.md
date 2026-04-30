@@ -1,6 +1,6 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-3%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-7%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
@@ -25,12 +25,13 @@
 
 | Day | Project Name    | API            | Code                       |
 |----|-------------|--------------|-------------------------|
-| 1  | Weather App | ✅ OpenWeatherMap | [View Code](./weather-app) |
+| 1  | Weather App | ✅ [OpenWeatherMap](https://openweathermap.org/) | [View Code](./weather-app) |
 | 2  | TODO App | ❌ | [View Code](./todo-app) |
 | 3  | Quiz App | ❌ | [View Code](./quiz-app) |
 | 4  | Random Password Generator | ❌ | [View Code](./random-password-generator) |
 | 5  | Notes Application | ❌ | [View Code](./note-app) |
 | 6  | Age Calculator | ❌ | [View Code](./age-calculator) |
+| 7  | Quote Generator | ✅ [quotable](https://github.com/lukePeavey/quotable) | [View Code](./quote-generator) |
 
 > [!NOTE]
 > Consistency beats intensity.
