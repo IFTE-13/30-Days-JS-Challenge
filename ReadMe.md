@@ -1,6 +1,6 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-8%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-9%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
@@ -33,6 +33,7 @@
 | 6  | Age Calculator | ❌ | [View Code](./age-calculator) |
 | 7  | Quote Generator | ✅ [quotable](https://github.com/lukePeavey/quotable) | [View Code](./quote-generator) |
 | 8  | QR Code Generator | ✅ [QR Code Generator](https://goqr.me/) | [View Code](./qr-code-generator) |
+| 9  | Toast Notification | ❌ | [View Code](./toast-notification) |
 
 > [!NOTE]
 > Consistency beats intensity.
