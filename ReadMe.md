@@ -1,6 +1,6 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-16%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-17%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
@@ -41,6 +41,7 @@
 | 14  | Toggle Password | ❌ | [View Code](./toggle-password) |
 | 15  | Mode Toggle | ❌ | [View Code](./mode-toggle) |
 | 16  | Form Validator | ❌ | [View Code](./form-validator) |
+| 17  | Image Gallery | ❌ | [View Code](./image-gallery) |
 
 > [!NOTE]
 > Consistency beats intensity.

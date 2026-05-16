@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="flex items-center gap-4 w-full max-w-lg">
+
+    <button onclick="prev()" class="text-gray-400 hover:text-white text-3xl transition-all hover:scale-110">
+      &#8592;
+    </button>
+
+    <div class="flex-1 relative">
+      <img id="galleryImg"
+        src="https://picsum.photos/id/10/600/400"
+        alt="gallery"
+        class="w-full rounded-2xl object-cover border border-white/10"
+        style="height: 320px;">
+      <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-2" id="dots"></div>
+    </div>
+
+    <button onclick="next()" class="text-gray-400 hover:text-white text-3xl transition-all hover:scale-110">
+      &#8594;
+    </button>
+
+  </div>
+
+  <script>
+    const images = [
+      "https://picsum.photos/id/10/600/400",
+      "https://picsum.photos/id/20/600/400",
+      "https://picsum.photos/id/30/600/400",
+      "https://picsum.photos/id/40/600/400",
+      "https://picsum.photos/id/50/600/400",
+      "https://picsum.photos/id/60/600/400",
+    ];
+
+    let current = 0;
+    const img = document.getElementById('galleryImg');
+    const dotsEl = document.getElementById('dots');
+
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      images.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = `w-2 h-2 rounded-full cursor-pointer transition-all ${i === current ? 'bg-white' : 'bg-white/30'}`;
+        d.onclick = () => goTo(i);
+        dotsEl.appendChild(d);
+      });
+    }
+
+    function goTo(i) {
+      current = i;
+      img.src = images[current];
+      buildDots();
+    }
+
+    function prev() { goTo((current - 1 + images.length) % images.length); }
+    function next() { goTo((current + 1) % images.length); }
+
+    buildDots();
+  </script>
+
+</body>
+</html>
