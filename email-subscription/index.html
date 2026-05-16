@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Collector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="bg-white/5 border border-white/10 rounded-2xl p-8 w-full max-w-sm flex flex-col gap-4">
+    <h1 class="text-white text-xl font-bold">Email Collector</h1>
+
+    <input type="email" id="emailInput" placeholder="your email here"
+      class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-500 outline-none focus:border-white/40 transition-all">
+
+    <span id="errMsg" class="text-red-400 text-xs hidden">Please enter a valid email.</span>
+
+    <button onclick="handleSubmit()"
+      class="bg-white text-black font-medium py-3 rounded-xl hover:bg-gray-200 transition-all">
+      Send
+    </button>
+
+    <div class="border-t border-white/10 pt-4 flex flex-col gap-3">
+      <p id="counter" class="text-gray-500 text-xs text-center">0 emails collected</p>
+
+      <div id="emailList" class="flex flex-col gap-2 max-h-48 overflow-y-auto"></div>
+
+      <div class="flex gap-2 mt-1">
+        <button onclick="downloadExcel()"
+          class="flex-1 border border-white/10 text-white text-sm py-2 rounded-xl hover:bg-white/10 transition-all">
+          Download .xlsx
+        </button>
+        <button onclick="clearAll()"
+          class="border border-white/10 text-red-400 text-sm px-4 py-2 rounded-xl hover:bg-white/10 transition-all">
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let emails = JSON.parse(localStorage.getItem('emails') || '[]');
+    renderList();
+
+    function handleSubmit() {
+      const input = document.getElementById('emailInput');
+      const err = document.getElementById('errMsg');
+      const val = input.value.trim();
+
+      if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        err.classList.remove('hidden');
+        return;
+      }
+
+      err.classList.add('hidden');
+      emails.push({ Email: val, Date: new Date().toLocaleString() });
+      localStorage.setItem('emails', JSON.stringify(emails));
+      input.value = '';
+      renderList();
+    }
+
+    function renderList() {
+      const list = document.getElementById('emailList');
+      const counter = document.getElementById('counter');
+      counter.textContent = `${emails.length} email${emails.length !== 1 ? 's' : ''} collected`;
+      list.innerHTML = '';
+      [...emails].reverse().forEach(e => {
+        const row = document.createElement('div');
+        row.className = 'flex justify-between text-xs text-gray-400 bg-white/5 rounded-lg px-3 py-2';
+        row.innerHTML = `<span class="text-white">${e.Email}</span><span>${e.Date}</span>`;
+        list.appendChild(row);
+      });
+    }
+
+    function downloadExcel() {
+      if (!emails.length) return alert('No emails to download.');
+      const ws = XLSX.utils.json_to_sheet(emails);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Emails');
+      XLSX.writeFile(wb, 'emails.xlsx');
+    }
+
+    function clearAll() {
+      if (!confirm('Clear all emails?')) return;
+      emails = [];
+      localStorage.setItem('emails', JSON.stringify(emails));
+      renderList();
+    }
+  </script>
+
+</body>
+</html>
