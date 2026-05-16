@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { background: #111; min-height: 100vh; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .cover-spin { animation: spin 8s linear infinite; }
+    .cover-paused { animation-play-state: paused; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+<div class="w-full max-w-md">
+  <div class="bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/10">
+
+    <div class="flex justify-center mb-6">
+      <div class="w-48 h-48 rounded-full overflow-hidden ring-4 ring-white/20">
+        <img id="albumArt" src="https://picsum.photos/id/29/300/300" alt="cover"
+          class="w-full h-full object-cover grayscale cover-spin cover-paused">
+      </div>
+    </div>
+
+    <div class="text-center mb-8">
+      <h2 id="trackTitle" class="text-2xl font-bold text-white">Magnetic Fields</h2>
+      <p id="trackArtist" class="text-gray-400 mt-1 text-sm">Ketsa</p>
+    </div>
+
+    <div class="flex justify-center items-center gap-8 mb-8">
+      <button id="prevBtn" class="text-3xl text-gray-400 hover:text-white transition-all hover:scale-110">
+        <i class="fas fa-backward-step"></i>
+      </button>
+      <button id="playPauseBtn" class="bg-white w-20 h-20 rounded-full flex items-center justify-center text-3xl text-black shadow-xl hover:scale-105 transition-all">
+        <i id="playIcon" class="fas fa-play"></i>
+      </button>
+      <button id="nextBtn" class="text-3xl text-gray-400 hover:text-white transition-all hover:scale-110">
+        <i class="fas fa-forward-step"></i>
+      </button>
+    </div>
+
+    <div id="trackList" class="border-t border-white/10 pt-4 flex flex-col gap-1"></div>
+
+  </div>
+</div>
+
+<script>
+const playlist = [
+  { title: "Magnetic Fields", artist: "Ketsa", cover: "https://picsum.photos/id/29/300/300", src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Ketsa/Passing_Moment/Ketsa_-_01_-_Magnetic_Fields.mp3" },
+  { title: "Golden Strand", artist: "Lobo Loco", cover: "https://picsum.photos/id/169/300/300", src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Lobo_Loco/Enlightened/Lobo_Loco_-_01_-_Golden_Strand.mp3" },
+  { title: "Night Trains", artist: "HoliznaCC0", cover: "https://picsum.photos/id/96/300/300", src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/HoliznaCC0/Ambient_Music_Vol_2/HoliznaCC0_-_02_-_Night_Trains.mp3" },
+  { title: "Misty", artist: "Kai Engel", cover: "https://picsum.photos/id/22/300/300", src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Chapter_Four_Kai_Engel/Kai_Engel_-_06_-_Misty.mp3" },
+  { title: "Fahrenheit", artist: "Doxent Zsigmond", cover: "https://picsum.photos/id/119/300/300", src: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Doxent_Zsigmond/Fahrenheit_EP/Doxent_Zsigmond_-_01_-_Fahrenheit.mp3" }
+];
+
+let idx = 0, playing = false;
+const audio = new Audio();
+const art = document.getElementById('albumArt');
+const titleEl = document.getElementById('trackTitle');
+const artistEl = document.getElementById('trackArtist');
+const playIcon = document.getElementById('playIcon');
+const trackList = document.getElementById('trackList');
+
+function load(i, autoplay) {
+  idx = i;
+  const t = playlist[i];
+  titleEl.textContent = t.title;
+  artistEl.textContent = t.artist;
+  art.src = t.cover;
+  audio.src = t.src;
+  document.querySelectorAll('.track-item').forEach((el, j) => {
+    el.classList.toggle('bg-white/10', j === i);
+    el.classList.toggle('text-white', j === i);
+  });
+  if (autoplay) audio.play().catch(() => {});
+}
+
+function buildList() {
+  playlist.forEach((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'track-item flex items-center gap-3 px-3 py-2 rounded-lg text-left w-full text-gray-400 hover:bg-white/10 hover:text-white transition-all' + (i === 0 ? ' bg-white/10 text-white' : '');
+    btn.innerHTML = `<span class="text-xs w-4">${i + 1}</span><span class="text-sm flex-1">${t.title}</span><span class="text-xs">${t.artist}</span>`;
+    btn.onclick = () => load(i, true);
+    trackList.appendChild(btn);
+  });
+}
+
+audio.addEventListener('play', () => {
+  playing = true;
+  playIcon.className = 'fas fa-pause';
+  art.classList.remove('cover-paused');
+});
+audio.addEventListener('pause', () => {
+  playing = false;
+  playIcon.className = 'fas fa-play';
+  art.classList.add('cover-paused');
+});
+audio.addEventListener('ended', () => load((idx + 1) % playlist.length, true));
+
+document.getElementById('playPauseBtn').onclick = () => playing ? audio.pause() : audio.play().catch(() => {});
+document.getElementById('prevBtn').onclick = () => load((idx - 1 + playlist.length) % playlist.length, playing);
+document.getElementById('nextBtn').onclick = () => load((idx + 1) % playlist.length, playing);
+
+buildList();
+audio.volume = 0.8;
+</script>
+
+</body>
+</html>
