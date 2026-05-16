@@ -1,6 +1,6 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-11%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-12%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
@@ -36,6 +36,7 @@
 | 9  | Toast Notification | ❌ | [View Code](./toast-notification) |
 | 10  | Music Player | ❌ | [View Code](./music-player) |
 | 11  | Stopwatch | ❌ | [View Code](./stopwatch) |
+| 12  | Calculator | ❌ | [View Code](./calculator) |
 
 > [!NOTE]
 > Consistency beats intensity.
