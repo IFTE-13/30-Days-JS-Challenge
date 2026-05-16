@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stop Watch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center gap-10 p-4">
+
+  <h1 id="displayTime" class="text-white text-7xl font-bold tracking-widest">00:00:00</h1>
+
+  <div class="flex items-center gap-8">
+    <button onclick="watchStop()" class="text-3xl text-gray-400 hover:text-white transition-all hover:scale-110">
+      <i class="fas fa-stop"></i>
+    </button>
+    <button onclick="watchStartPause()" class="bg-white w-20 h-20 rounded-full flex items-center justify-center text-3xl text-black hover:scale-105 transition-all">
+      <i id="playIcon" class="fas fa-play"></i>
+    </button>
+    <button onclick="watchReset()" class="text-3xl text-gray-400 hover:text-white transition-all hover:scale-110">
+      <i class="fas fa-rotate-left"></i>
+    </button>
+  </div>
+
+  <script>
+    let seconds = 0, minutes = 0, hours = 0;
+    let timer = null;
+    let running = false;
+    const displayTime = document.getElementById('displayTime');
+    const playIcon = document.getElementById('playIcon');
+
+    function tick() {
+      seconds++;
+      if (seconds === 60) { seconds = 0; minutes++; }
+      if (minutes === 60) { minutes = 0; hours++; }
+      const h = hours < 10 ? '0' + hours : hours;
+      const m = minutes < 10 ? '0' + minutes : minutes;
+      const s = seconds < 10 ? '0' + seconds : seconds;
+      displayTime.textContent = h + ':' + m + ':' + s;
+    }
+
+    function watchStartPause() {
+      if (running) {
+        clearInterval(timer);
+        timer = null;
+        running = false;
+        playIcon.className = 'fas fa-play';
+      } else {
+        timer = setInterval(tick, 1000);
+        running = true;
+        playIcon.className = 'fas fa-pause';
+      }
+    }
+
+    function watchStop() {
+      clearInterval(timer);
+      timer = null;
+      running = false;
+      playIcon.className = 'fas fa-play';
+    }
+
+    function watchReset() {
+      watchStop();
+      seconds = 0; minutes = 0; hours = 0;
+      displayTime.textContent = '00:00:00';
+    }
+  </script>
+
+</body>
+</html>
