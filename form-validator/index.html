@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    input, textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus { border-color: rgba(255,255,255,0.4); }
+    input.error, textarea.error { border-color: #f87171; }
+    .err-msg { color: #f87171; font-size: 12px; min-height: 16px; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-6">
+
+  <div class="bg-white/5 border border-white/10 rounded-2xl p-8 w-full max-w-md flex flex-col gap-5">
+    <h1 class="text-white text-2xl font-bold">Sign Up</h1>
+
+    <div class="field">
+      <label class="text-gray-400 text-sm">Username</label>
+      <input class="p-1" type="text" id="username" placeholder="e.g. john_doe">
+      <span class="err-msg" id="usernameErr"></span>
+    </div>
+
+    <div class="flex gap-3">
+      <div class="field flex-1">
+        <label class="text-gray-400 text-sm">First Name</label>
+        <input class="p-1" type="text" id="firstName" placeholder="John">
+        <span class="err-msg" id="firstNameErr"></span>
+      </div>
+      <div class="field flex-1">
+        <label class="text-gray-400 text-sm">Last Name</label>
+        <input class="p-1" type="text" id="lastName" placeholder="Doe">
+        <span class="err-msg" id="lastNameErr"></span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="text-gray-400 text-sm">Email</label>
+      <input class="p-1" type="text" id="email" placeholder="john@example.com">
+      <span class="err-msg" id="emailErr"></span>
+    </div>
+
+    <div class="field">
+      <label class="text-gray-400 text-sm">Message</label>
+      <textarea class="p-1" id="message" rows="3" placeholder="Your message..."></textarea>
+      <span class="err-msg" id="messageErr"></span>
+    </div>
+
+    <button onclick="validateForm()"
+      class="bg-white text-black font-medium py-3 rounded-xl hover:bg-gray-200 transition-all mt-1">
+      Submit
+    </button>
+  </div>
+
+  <script src="validate.js"></script>
+</body>
+</html>
