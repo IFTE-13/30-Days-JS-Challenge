@@ -37,6 +37,7 @@
 | 10  | Music Player | ❌ | [View Code](./music-player) |
 | 11  | Stopwatch | ❌ | [View Code](./stopwatch) |
 | 12  | Calculator | ❌ | [View Code](./calculator) |
+| 12  | Popup | ❌ | [View Code](./popup) |
 
 > [!NOTE]
 > Consistency beats intensity.

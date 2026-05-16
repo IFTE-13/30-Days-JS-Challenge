@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <button onclick="openPopup()" class="bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-all">
+    Submit
+  </button>
+
+  <div id="overlay" onclick="closePopup()"
+    class="hidden fixed inset-0 bg-black/60 flex items-center justify-center">
+
+    <div onclick="event.stopPropagation()"
+      class="bg-[#1a1a1a] border border-white/10 rounded-2xl p-8 flex flex-col items-center gap-6 w-72">
+      <h1 class="text-white text-2xl font-bold">やめてください</h1>
+      <button onclick="closePopup()" class="bg-white text-black px-6 py-2 rounded-xl font-medium hover:bg-gray-200 transition-all">
+        Thank you
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function openPopup() {
+      document.getElementById('overlay').classList.remove('hidden');
+      document.getElementById('overlay').classList.add('flex');
+    }
+
+    function closePopup() {
+      document.getElementById('overlay').classList.add('hidden');
+      document.getElementById('overlay').classList.remove('flex');
+    }
+  </script>
+
+</body>
+</html>
