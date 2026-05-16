@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mode Toggle</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { background: #111; color: white; min-height: 100vh; transition: background 0.3s, color 0.3s; }
+    body.light { background: #f5f5f5; color: #111; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <button onclick="toggleMode()"
+    class="flex items-center gap-3 bg-white/10 border border-white/10 px-5 py-3 rounded-xl hover:bg-white/20 transition-all">
+    <i id="modeIcon" class="fas fa-sun text-xl"></i>
+    <span id="modeText" class="font-medium">Light Mode</span>
+  </button>
+
+  <script>
+    let dark = true;
+
+    function toggleMode() {
+      dark = !dark;
+      document.body.classList.toggle('light', !dark);
+      document.getElementById('modeIcon').className = dark ? 'fas fa-sun text-xl' : 'fas fa-moon text-xl';
+      document.getElementById('modeText').textContent = dark ? 'Light Mode' : 'Dark Mode';
+    }
+  </script>
+
+</body>
+</html>
