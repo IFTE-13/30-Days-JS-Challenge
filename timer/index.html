@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="flex flex-col items-center gap-8 text-center">
+
+    <div>
+      <p class="text-gray-400 text-sm tracking-widest uppercase">We are on our way</p>
+      <h1 class="text-white text-5xl font-bold mt-2">Coming Soon</h1>
+    </div>
+
+    <div class="flex gap-4">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 w-24 flex flex-col items-center gap-1">
+        <p id="days" class="text-white text-4xl font-bold">00</p>
+        <span class="text-gray-400 text-xs uppercase tracking-widest">Days</span>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 w-24 flex flex-col items-center gap-1">
+        <p id="hours" class="text-white text-4xl font-bold">00</p>
+        <span class="text-gray-400 text-xs uppercase tracking-widest">Hours</span>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 w-24 flex flex-col items-center gap-1">
+        <p id="minutes" class="text-white text-4xl font-bold">00</p>
+        <span class="text-gray-400 text-xs uppercase tracking-widest">Minutes</span>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 w-24 flex flex-col items-center gap-1">
+        <p id="seconds" class="text-white text-4xl font-bold">00</p>
+        <span class="text-gray-400 text-xs uppercase tracking-widest">Seconds</span>
+      </div>
+    </div>
+
+    <p id="doneMsg" class="text-green-400 text-sm hidden">We are live!</p>
+
+    <button class="bg-white text-black font-medium px-8 py-3 rounded-xl hover:bg-gray-200 transition-all">
+      Learn More
+    </button>
+
+  </div>
+
+  <script>
+    const target = new Date("Oct 16, 2026 00:00:00").getTime();
+
+    function pad(n) { return n < 10 ? '0' + n : n; }
+
+    const timer = setInterval(() => {
+      const now      = new Date().getTime();
+      const distance = target - now;
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent = '00');
+        document.getElementById('doneMsg').classList.remove('hidden');
+        return;
+      }
+
+      document.getElementById('days').textContent    = pad(Math.floor(distance / (1000 * 60 * 60 * 24)));
+      document.getElementById('hours').textContent   = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+      document.getElementById('minutes').textContent = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+      document.getElementById('seconds').textContent = pad(Math.floor((distance % (1000 * 60)) / 1000));
+    }, 1000);
+  </script>
+
+</body>
+</html>
