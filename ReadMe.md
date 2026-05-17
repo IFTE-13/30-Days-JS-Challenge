@@ -46,6 +46,7 @@
 | 19  | Password Strength Checker | ❌ | [View Code](./password-strength) |
 | 20  | Text to Speech | ❌ | [View Code](./text-to-speech) |
 | 21  | Timer | ❌ | [View Code](./timer) |
+| 22  | Background Remover | ✅ [removebg](https://www.remove.bg/api) | [View Code](./background-remover) |
 
 > [!NOTE]
 > Consistency beats intensity.

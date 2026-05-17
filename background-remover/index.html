@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Remover</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+    #dropZone { border: 2px dashed rgba(255,255,255,0.15); transition: border 0.2s; }
+    #dropZone.dragover { border-color: rgba(255,255,255,0.5); }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="bg-white/5 border border-white/10 rounded-2xl p-8 w-full max-w-lg flex flex-col gap-6">
+    <h1 class="text-white text-xl font-bold">Background Remover</h1>
+
+    <div id="dropZone" onclick="fileInput.click()"
+      class="rounded-xl flex flex-col items-center justify-center gap-3 p-10 cursor-pointer hover:border-white/30 transition-all">
+      <p class="text-gray-400 text-sm">Click or drag & drop an image</p>
+      <p class="text-gray-600 text-xs">PNG, JPG supported</p>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" class="hidden">
+
+    <div id="previewBox" class="hidden flex flex-col gap-4">
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <p class="text-gray-400 text-xs uppercase tracking-widest">Original</p>
+          <img id="originalImg" class="w-full rounded-xl object-cover border border-white/10">
+        </div>
+        <div class="flex flex-col gap-2">
+          <p class="text-gray-400 text-xs uppercase tracking-widest">Result</p>
+          <div id="resultBox" class="w-full rounded-xl border border-white/10 flex items-center justify-center min-h-32"
+            style="background: repeating-conic-gradient(#222 0% 25%, #333 0% 50%) 0 0 / 16px 16px;">
+            <p id="resultPlaceholder" class="text-gray-500 text-xs">Result here</p>
+            <img id="resultImg" class="hidden w-full rounded-xl">
+          </div>
+        </div>
+      </div>
+
+      <button onclick="removeBackground()"  id="removeBtn"
+        class="bg-white text-black font-medium py-3 rounded-xl hover:bg-gray-200 transition-all flex items-center justify-center gap-2">
+        Remove Background
+      </button>
+
+      <button id="downloadBtn" onclick="downloadResult()" 
+        class="hidden border border-white/10 text-white text-sm py-3 rounded-xl hover:bg-white/10 transition-all">
+        Download PNG
+      </button>
+
+      <p id="statusMsg" class="text-center text-sm hidden"></p>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = 'YOUR_API_KEY_HERE';
+
+    const fileInput      = document.getElementById('fileInput');
+    const dropZone       = document.getElementById('dropZone');
+    const previewBox     = document.getElementById('previewBox');
+    const originalImg    = document.getElementById('originalImg');
+    const resultImg      = document.getElementById('resultImg');
+    const resultPlaceholder = document.getElementById('resultPlaceholder');
+    const removeBtn      = document.getElementById('removeBtn');
+    const downloadBtn    = document.getElementById('downloadBtn');
+    const statusMsg      = document.getElementById('statusMsg');
+
+    let selectedFile = null;
+
+    fileInput.addEventListener('change', () => handleFile(fileInput.files[0]));
+
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      handleFile(e.dataTransfer.files[0]);
+    });
+
+    function handleFile(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      selectedFile = file;
+      originalImg.src = URL.createObjectURL(file);
+      resultImg.classList.add('hidden');
+      resultPlaceholder.classList.remove('hidden');
+      downloadBtn.classList.add('hidden');
+      statusMsg.classList.add('hidden');
+      previewBox.classList.remove('hidden');
+    }
+
+    async function removeBackground() {
+      if (!selectedFile) return;
+      if (API_KEY === 'YOUR_API_KEY_HERE') {
+        showStatus('Please add your remove.bg API key in the code.', 'red');
+        return;
+      }
+
+      removeBtn.disabled = true;
+      removeBtn.textContent = 'Processing...';
+      showStatus('Removing background...', 'gray');
+
+      const formData = new FormData();
+      formData.append('image_file', selectedFile);
+      formData.append('size', 'auto');
+
+      try {
+        const res = await fetch('https://api.remove.bg/v1.0/removebg', {
+          method: 'POST',
+          headers: { 'X-Api-Key': API_KEY },
+          body: formData
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.errors?.[0]?.title || 'API error');
+        }
+
+        const blob = await res.blob();
+        const url  = URL.createObjectURL(blob);
+        resultImg.src = url;
+        resultImg.classList.remove('hidden');
+        resultPlaceholder.classList.add('hidden');
+        downloadBtn.classList.remove('hidden');
+        downloadBtn.dataset.url = url;
+        showStatus('Done!', 'green');
+      } catch (err) {
+        showStatus('Error: ' + err.message, 'red');
+      } finally {
+        removeBtn.disabled = false;
+        removeBtn.textContent = 'Remove Background';
+      }
+    }
+
+    function downloadResult() {
+      const a = document.createElement('a');
+      a.href = downloadBtn.dataset.url;
+      a.download = 'removed-bg.png';
+      a.click();
+    }
+
+    function showStatus(msg, color) {
+      const colors = { gray: 'text-gray-400', green: 'text-green-400', red: 'text-red-400' };
+      statusMsg.textContent = msg;
+      statusMsg.className = `text-center text-sm ${colors[color]}`;
+      statusMsg.classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
