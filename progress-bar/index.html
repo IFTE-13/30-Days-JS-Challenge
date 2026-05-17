@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Bar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+    .circle { transform: rotate(-90deg); }
+    .ring {
+      fill: none;
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 10;
+    }
+    .progress {
+      fill: none;
+      stroke: white;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 565;
+      stroke-dashoffset: 565;
+      transition: stroke-dashoffset 1.5s ease;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="flex flex-col items-center gap-6">
+
+    <div class="relative w-48 h-48 flex items-center justify-center">
+      <svg class="circle w-full h-full" viewBox="0 0 200 200">
+        <circle class="ring"     cx="100" cy="100" r="90"/>
+        <circle class="progress" cx="100" cy="100" r="90" id="progressRing"/>
+      </svg>
+      <div class="absolute flex flex-col items-center">
+        <span id="percentText" class="text-white text-4xl font-bold">0%</span>
+        <span class="text-gray-400 text-xs uppercase tracking-widest mt-1">JavaScript</span>
+      </div>
+    </div>
+
+    <input type="range" min="0" max="100" value="75" id="slider"
+      class="w-48 accent-white cursor-pointer">
+
+  </div>
+
+  <script>
+    const ring        = document.getElementById('progressRing');
+    const percentText = document.getElementById('percentText');
+    const slider      = document.getElementById('slider');
+    const circumference = 2 * Math.PI * 90;
+
+    function setProgress(val) {
+      const offset = circumference - (val / 100) * circumference;
+      ring.style.strokeDashoffset = offset;
+      percentText.textContent = val + '%';
+    }
+
+    slider.addEventListener('input', () => setProgress(slider.value));
+
+    window.addEventListener('load', () => {
+      setTimeout(() => setProgress(75), 200);
+    });
+  </script>
+
+</body>
+</html>

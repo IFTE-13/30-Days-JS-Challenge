@@ -1,6 +1,6 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-23%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-25%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
@@ -49,6 +49,7 @@
 | 22  | Background Remover | ✅ [removebg](https://www.remove.bg/api) | [View Code](./background-remover) |
 | 23  | Mini Calendar | ❌ | [View Code](./mini-calendar) |
 | 24  | Custom Select Menu | ❌ | [View Code](./custom-select-menu) |
+| 25  | Progress Bar | ❌ | [View Code](./progress-bar) |
 
 > [!NOTE]
 > Consistency beats intensity.
