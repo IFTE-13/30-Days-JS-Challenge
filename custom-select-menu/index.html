@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Select Menu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="w-72 flex flex-col gap-2 relative">
+    <p class="text-gray-400 text-sm">Select your favourite fruit</p>
+
+    <button onclick="toggleMenu()" id="trigger"
+      class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex items-center justify-between text-sm text-white hover:border-white/30 transition-all">
+      <span id="selected">Choose a fruit</span>
+      <i id="arrow" class="fas fa-chevron-down text-gray-400 text-xs transition-transform duration-200"></i>
+    </button>
+
+    <ul id="menu"
+      class="hidden absolute top-full mt-2 w-full bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden z-10 shadow-xl">
+      <li onclick="select('🍎 Apple')"   class="option">🍎 Apple</li>
+      <li onclick="select('🍊 Orange')"  class="option">🍊 Orange</li>
+      <li onclick="select('🥭 Mango')"   class="option">🥭 Mango</li>
+      <li onclick="select('🍇 Grapes')"  class="option">🍇 Grapes</li>
+      <li onclick="select('🍓 Strawberry')" class="option">🍓 Strawberry</li>
+      <li onclick="select('🍋 Lemon')"   class="option last">🍋 Lemon</li>
+    </ul>
+  </div>
+
+  <style>
+    .option { padding: 12px 16px; font-size: 14px; color: #ccc; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.15s; }
+    .option:hover { background: rgba(255,255,255,0.08); color: white; }
+    .last { border-bottom: none; }
+  </style>
+
+  <script>
+    let open = false;
+
+    function toggleMenu() {
+      open = !open;
+      document.getElementById('menu').classList.toggle('hidden', !open);
+      document.getElementById('arrow').style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    function select(val) {
+      document.getElementById('selected').textContent = val;
+      document.getElementById('selected').classList.remove('text-gray-500');
+      document.getElementById('selected').classList.add('text-white');
+      toggleMenu();
+    }
+
+    document.addEventListener('click', e => {
+      if (!document.getElementById('trigger').contains(e.target) &&
+          !document.getElementById('menu').contains(e.target)) {
+        open = true;
+        toggleMenu();
+      }
+    });
+  </script>
+
+</body>
+</html>
