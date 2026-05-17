@@ -1,6 +1,6 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-26%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-29%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
@@ -53,6 +53,7 @@
 | 26  | Product Card | ❌ | [View Code](./product-card) |
 | 27  | Simple Landing Page (CryptoX) | ❌ | [View Code](./simple-landing-page) |
 | 28  | Digital Clock | ❌ | [View Code](./digital-clock) |
+| 29  | D-N-D | ❌ | [View Code](./dnd) |
 
 > [!NOTE]
 > Consistency beats intensity.
