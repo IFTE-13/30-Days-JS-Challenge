@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Strength Checker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="bg-white/5 border border-white/10 rounded-2xl p-8 w-full max-w-sm flex flex-col gap-4">
+    <h1 class="text-white text-xl font-bold">Password Strength</h1>
+
+    <!-- Input -->
+    <div class="flex items-center bg-white/5 border border-white/10 rounded-xl px-4 py-3 gap-3">
+      <input id="password" type="password" placeholder="Enter password"
+        class="bg-transparent text-white placeholder-gray-500 outline-none flex-1 text-sm">
+      <button onclick="togglePassword()" class="text-gray-400 hover:text-white transition-all">
+        <i id="eyeIcon" class="fas fa-eye"></i>
+      </button>
+    </div>
+
+    <!-- Bars -->
+    <div class="flex gap-2">
+      <div id="bar1" class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-300"></div>
+      <div id="bar2" class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-300"></div>
+      <div id="bar3" class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-300"></div>
+      <div id="bar4" class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-300"></div>
+    </div>
+
+    <!-- Message -->
+    <p id="message" class="text-sm hidden">
+      Strength: <span id="strength" class="font-semibold"></span>
+    </p>
+
+    <!-- Checklist -->
+    <div class="flex flex-col gap-1">
+      <div id="chk-len"    class="check-item">&#10005; At least 8 characters</div>
+      <div id="chk-upper"  class="check-item">&#10005; Uppercase letter</div>
+      <div id="chk-number" class="check-item">&#10005; Number</div>
+      <div id="chk-symbol" class="check-item">&#10005; Symbol (!@#$...)</div>
+    </div>
+  </div>
+
+  <style>
+    .check-item { font-size: 12px; color: #6b7280; transition: color 0.2s; }
+    .check-item.pass { color: #4ade80; }
+  </style>
+
+  <script>
+    const password = document.getElementById('password');
+    const message  = document.getElementById('message');
+    const strength = document.getElementById('strength');
+    const bars     = [1,2,3,4].map(i => document.getElementById('bar' + i));
+    const colors   = ['#ef4444', '#f97316', '#eab308', '#4ade80'];
+    const labels   = ['Weak', 'Fair', 'Good', 'Strong'];
+
+    password.addEventListener('input', () => {
+      const val = password.value;
+
+      const checks = {
+        len:    val.length >= 8,
+        upper:  /[A-Z]/.test(val),
+        number: /[0-9]/.test(val),
+        symbol: /[^a-zA-Z0-9]/.test(val),
+      };
+
+      document.getElementById('chk-len').className    = 'check-item' + (checks.len    ? ' pass' : '');
+      document.getElementById('chk-upper').className  = 'check-item' + (checks.upper  ? ' pass' : '');
+      document.getElementById('chk-number').className = 'check-item' + (checks.number ? ' pass' : '');
+      document.getElementById('chk-symbol').className = 'check-item' + (checks.symbol ? ' pass' : '');
+
+      document.getElementById('chk-len').textContent    = (checks.len    ? '✓' : '✗') + ' At least 8 characters';
+      document.getElementById('chk-upper').textContent  = (checks.upper  ? '✓' : '✗') + ' Uppercase letter';
+      document.getElementById('chk-number').textContent = (checks.number ? '✓' : '✗') + ' Number';
+      document.getElementById('chk-symbol').textContent = (checks.symbol ? '✓' : '✗') + ' Symbol (!@#$...)';
+
+      const score = Object.values(checks).filter(Boolean).length;
+
+      if (!val) {
+        message.classList.add('hidden');
+        bars.forEach(b => b.style.background = 'rgba(255,255,255,0.1)');
+        return;
+      }
+
+      message.classList.remove('hidden');
+      strength.textContent = labels[score - 1] || 'Weak';
+      strength.style.color = colors[score - 1] || '#ef4444';
+
+      bars.forEach((b, i) => {
+        b.style.background = i < score ? colors[score - 1] : 'rgba(255,255,255,0.1)';
+      });
+    });
+
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const icon  = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+      }
+    }
+  </script>
+
+</body>
+</html>
