@@ -52,6 +52,7 @@
 | 25  | Progress Bar | ❌ | [View Code](./progress-bar) |
 | 26  | Product Card | ❌ | [View Code](./product-card) |
 | 27  | Simple Landing Page (CryptoX) | ❌ | [View Code](./simple-landing-page) |
+| 28  | Digital Clock | ❌ | [View Code](./digital-clock) |
 
 > [!NOTE]
 > Consistency beats intensity.

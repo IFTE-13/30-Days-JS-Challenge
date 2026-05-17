@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #111; min-height: 100vh; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="bg-white/5 border border-white/10 rounded-2xl p-10 flex items-center gap-10">
+
+    <!-- Date Side -->
+    <div class="flex flex-col items-center gap-1 pr-10 border-r border-white/10">
+      <p id="dayName" class="text-gray-400 text-sm uppercase tracking-widest"></p>
+      <p id="dateNum" class="text-white text-7xl font-bold leading-none"></p>
+      <p id="monthYear" class="text-gray-400 text-sm uppercase tracking-widest"></p>
+    </div>
+
+    <!-- Time Side -->
+    <div class="flex flex-col items-center gap-2">
+      <div class="flex items-center gap-2">
+        <div class="flex flex-col items-center">
+          <p id="hours" class="text-white text-7xl font-bold leading-none"></p>
+          <p class="text-gray-600 text-xs uppercase tracking-widest mt-1">Hours</p>
+        </div>
+        <p class="text-white text-5xl font-bold mb-4">:</p>
+        <div class="flex flex-col items-center">
+          <p id="minutes" class="text-white text-7xl font-bold leading-none"></p>
+          <p class="text-gray-600 text-xs uppercase tracking-widest mt-1">Minutes</p>
+        </div>
+        <p class="text-white text-5xl font-bold mb-4">:</p>
+        <div class="flex flex-col items-center">
+          <p id="seconds" class="text-white text-7xl font-bold leading-none"></p>
+          <p class="text-gray-600 text-xs uppercase tracking-widest mt-1">Seconds</p>
+        </div>
+        <p id="ampm" class="text-gray-400 text-sm uppercase tracking-widest"></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const days   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+    function pad(n) { return n < 10 ? '0' + n : n; }
+
+    function update() {
+      const now = new Date();
+
+      document.getElementById('dayName').textContent  = days[now.getDay()];
+      document.getElementById('dateNum').textContent  = pad(now.getDate());
+      document.getElementById('monthYear').textContent = months[now.getMonth()] + ' ' + now.getFullYear();
+
+      let h = now.getHours();
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+
+      document.getElementById('hours').textContent   = pad(h);
+      document.getElementById('minutes').textContent = pad(now.getMinutes());
+      document.getElementById('seconds').textContent = pad(now.getSeconds());
+      document.getElementById('ampm').textContent    = ampm;
+    }
+
+    update();
+    setInterval(update, 1000);
+  </script>
+
+</body>
+</html>
