@@ -44,6 +44,7 @@
 | 17  | Image Gallery | ❌ | [View Code](./image-gallery) |
 | 18  | Email Subscription | ❌ | [View Code](./email-subscription) |
 | 19  | Password Strength Checker | ❌ | [View Code](./password-strength) |
+| 20  | Text to Speech | ❌ | [View Code](./text-to-speech) |
 
 > [!NOTE]
 > Consistency beats intensity.
