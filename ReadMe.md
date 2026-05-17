@@ -1,6 +1,6 @@
 # 30 Days JavaScript Challenge
 
-![Progress](https://img.shields.io/badge/Progress-21%2F30-blue)
+![Progress](https://img.shields.io/badge/Progress-23%2F30-blue)
 ![HTML](https://img.shields.io/badge/HTML5-orange)
 ![Tailwain CSS](https://img.shields.io/badge/CSS3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-yellow)
@@ -47,6 +47,7 @@
 | 20  | Text to Speech | ❌ | [View Code](./text-to-speech) |
 | 21  | Timer | ❌ | [View Code](./timer) |
 | 22  | Background Remover | ✅ [removebg](https://www.remove.bg/api) | [View Code](./background-remover) |
+| 23  | Mini Calendar | ❌ | [View Code](./mini-calendar) |
 
 > [!NOTE]
 > Consistency beats intensity.
